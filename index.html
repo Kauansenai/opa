@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Colaboradores</title>
+    <!-- Link para o Bootstrap via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="estilo.css" rel="stylesheet"> <!-- Arquivo de estilo opcional -->
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 class="text-center">Cadastro de Colaboradores</h2>
+    <form id="cadastroForm">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" placeholder="Digite o nome completo" required>
+        </div>
+        <div class="mb-3">
+            <label for="cpf" class="form-label">CPF</label>
+            <input type="text" class="form-control" id="cpf" placeholder="Digite o CPF" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Digite o seu Email" required>
+        </div>
+        <div class="mb-3">
+            <label for="cargo" class="form-label">Cargo</label>
+            <input type="text" class="form-control" id="cargo" placeholder="Digite o cargo" required>
+        </div>
+        <div class="mb-3">
+            <label for="epi" class="form-label">EPI</label>
+            <input type="text" class="form-control" id="epi" placeholder="Digite o EPI fornecido" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+</div>
+
+<!-- Scripts Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Javascript para envio de dados -->
+<script>
+    document.getElementById('cadastroForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const nome = document.getElementById('nome').value;
+        const cpf = document.getElementById('cpf').value;
+        const email = document.getElementById('email').value;
+        const cargo = document.getElementById('cargo').value;
+        const epi = document.getElementById('epi').value;
+
+        fetch('http://localhost:3001/colaboradores', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ nome, cpf, email, cargo, epi })
+        })
+        .then(response => response.text())
+        .then(message => {
+            alert(message);
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao cadastrar colaborador.');
+        });
+    });
+</script>
+
+</body>
+</html>
